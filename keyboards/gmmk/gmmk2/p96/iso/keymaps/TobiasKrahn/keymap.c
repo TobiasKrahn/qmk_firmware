@@ -46,7 +46,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (host_keyboard_led_state().caps_lock) {
-        RGB_MATRIX_INDICATOR_SET_COLOR(54, 255, 255, 255);
+        for (uint8_t led = led_min; led < led_max; led++) {
+            RGB_MATRIX_INDICATOR_SET_COLOR(led, 255, 255, 255);
+
+        }
     }
     return false;
 }
