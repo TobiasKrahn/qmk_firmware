@@ -50,10 +50,18 @@ typedef struct aw20216s_driver_t {
     bool    pwm_buffer_dirty;
 } PACKED aw20216s_driver_t;
 
-aw20216s_driver_t driver_buffers[AW20216S_DRIVER_COUNT] = {{
-    .pwm_buffer       = {0},
-    .pwm_buffer_dirty = false,
-}};
+aw20216s_driver_t driver_buffers[AW20216S_DRIVER_COUNT] = {
+    {
+        .pwm_buffer       = {0},
+        .pwm_buffer_dirty = false,
+    },
+#if AW20216S_DRIVER_COUNT > 1
+    {
+        .pwm_buffer       = {0},
+        .pwm_buffer_dirty = false,
+    }
+#endif
+};
 
 bool aw20216s_write(pin_t cs_pin, uint8_t page, uint8_t reg, uint8_t* data, uint8_t len) {
     static uint8_t s_spi_transfer_buffer[2] = {0};
